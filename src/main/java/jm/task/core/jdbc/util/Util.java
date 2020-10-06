@@ -18,5 +18,4 @@ public class Util {
             e.printStackTrace();
         }
     }
-    // реализуйте настройку соеденения с БД
 }
