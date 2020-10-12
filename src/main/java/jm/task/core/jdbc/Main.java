@@ -12,6 +12,5 @@ public class Main {
         userServiceImpl.getAllUsers();
         userServiceImpl.cleanUsersTable();
         userServiceImpl.dropUsersTable();
-        // реализуйте алгоритм здесь
     }
 }
