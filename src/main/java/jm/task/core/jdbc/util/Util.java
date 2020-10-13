@@ -22,6 +22,7 @@ public class Util {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
              connection = DriverManager.getConnection(HOST, USERNAME, PASSWORD);
+             connection.setAutoCommit(false);
             System.out.println("Подключение успешно");
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
