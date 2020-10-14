@@ -1,12 +1,15 @@
 package jm.task.core.jdbc.util;
 
 import jm.task.core.jdbc.model.User;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Environment;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class Util {
     private static final String HOST = "jdbc:mysql://localhost:3306/users?serverTimezone=Europe/Moscow&useSSL=false";
@@ -16,13 +19,14 @@ public class Util {
 
     public Util() {
     }
+
     //TODO JDBC
     public static Connection getConnection() {
         Connection connection = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-             connection = DriverManager.getConnection(HOST, USERNAME, PASSWORD);
-             connection.setAutoCommit(false);
+            connection = DriverManager.getConnection(HOST, USERNAME, PASSWORD);
+            connection.setAutoCommit(false);
             System.out.println("Подключение успешно");
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -34,18 +38,25 @@ public class Util {
     //TODO HIBER
     private static SessionFactory sessionFactory;
 
-    public static SessionFactory getSessionFactory() {
+    static {
         try {
-            Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
-            configuration.addAnnotatedClass(User.class);
-            StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
-                    .applySettings(configuration.getProperties());
-            sessionFactory = configuration.buildSessionFactory(builder.build());
-            System.out.println("Соединение созданно");
-        } catch (Exception e) {
-            System.err.println("Ошибка соединения " + e.getMessage());
+            Properties properties = new Properties();
+            //  properties.setProperty(Environment.DIALECT, "org.hibernate.dialect.MySQLDialect");
+            properties.setProperty(Environment.HBM2DDL_AUTO, "update");
+            properties.setProperty(Environment.DRIVER, "com.mysql.jdbc.Driver");
+            properties.setProperty(Environment.USER, "root");
+            properties.setProperty(Environment.PASS, "22111993");
+            properties.setProperty(Environment.URL, "jdbc:mysql://localhost:3306/users?serverTimezone=Europe/Moscow&amp");
+            sessionFactory = new org.hibernate.cfg.Configuration()
+                    .addProperties(properties)
+                    .addAnnotatedClass(User.class)
+                    .buildSessionFactory();
+        } catch (Exception ex) {
+            throw new ExceptionInInitializerError(ex);
         }
-        return sessionFactory;
     }
 
+    public static Session getSession() throws HibernateException {
+        return sessionFactory.openSession();
+    }
 }
