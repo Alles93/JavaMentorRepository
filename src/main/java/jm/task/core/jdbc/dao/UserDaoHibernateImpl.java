@@ -16,6 +16,7 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void createUsersTable() {
+
         session = Util.getSession();
         Transaction transaction = session.beginTransaction();
         try {
@@ -40,7 +41,7 @@ public class UserDaoHibernateImpl implements UserDao {
         session = Util.getSession();
         Transaction transaction = session.beginTransaction();
         try {
-            String query = "DROP TABLE mydb.users";
+            String query = "DROP TABLE IF EXISTS mydb.users";
             session.createSQLQuery(query).addEntity(User.class).executeUpdate();
             transaction.commit();
             System.out.println("Таблица удалена");
@@ -94,7 +95,6 @@ public class UserDaoHibernateImpl implements UserDao {
         Transaction transaction = session.beginTransaction();
         try {
             users = session.createQuery("FROM User").list();
-            System.out.println(users);
             transaction.commit();
         } catch (Exception e) {
             transaction.rollback();
