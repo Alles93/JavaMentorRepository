@@ -1,10 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8" />
+    <title>Loop</title>
+    <style>
+        table th, table td {padding: 10px;}
+        .row  {
+            font-style: italic;
+        }
+
+    </style>
 </head>
 <body>
-$END$
+<h1>List of cars</h1>
+
+<table border="1">
+    <tr>
+        <th>Model</th>
+        <th>Series</th>
+    </tr>
+
+    <tr th:each="car, state : ${cars}"
+        class="row" th:classappend="${state.odd} ? 'odd-row' : 'even-row'">
+        <td th:utext="${car.model}">Model</td>
+        <td th:utext="${car.series}">Series</td>
+    </tr>
+    <th:block th:each="msg : ${messages}">
+        <h1 th:text="${msg}"></h1>
+    </th:block>
+
+</table>
+
 </body>
 </html>
