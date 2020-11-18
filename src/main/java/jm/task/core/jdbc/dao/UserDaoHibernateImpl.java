@@ -4,6 +4,7 @@ import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +28,7 @@ public class UserDaoHibernateImpl implements UserDao {
             session.createSQLQuery(query).executeUpdate();
             transaction.commit();
             System.out.println("База данных создана");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Ошибка " + e.getMessage());
         } finally {
             session.close();
