@@ -40,7 +40,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try {
             session = Util.getSessionFactory().openSession();
             Transaction transaction = session.beginTransaction();
-            String query = "DROP TABLE IF EXISTS mydb.users";
+            String query = "DROP TABLE IF EXISTS users";
             session.createSQLQuery(query).executeUpdate();
             transaction.commit();
             System.out.println("Таблица удалена");
@@ -93,8 +93,6 @@ public class UserDaoHibernateImpl implements UserDao {
             transaction.commit();
         } catch (Exception e) {
             System.out.println("Ошибка " + e.getMessage());
-        } finally {
-            session.close();
         }
         return users;
     }
@@ -105,7 +103,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try {
             session = Util.getSessionFactory().openSession();
             Transaction transaction = session.beginTransaction();
-            String query = "DELETE TABLE users";
+            String query = "DELETE FROM users";
             session.createSQLQuery(query).executeUpdate();
             transaction.commit();
             System.out.println("База очищена");

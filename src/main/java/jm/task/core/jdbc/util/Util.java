@@ -21,15 +21,17 @@ public class Util {
         Connection connection = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-             connection = DriverManager.getConnection(HOST, USERNAME, PASSWORD);
-             connection.setAutoCommit(false);
-            System.out.println("Подключение успешно");
+
+            connection = DriverManager.getConnection(HOST,USERNAME,PASSWORD);
+            System.out.println("Connection OK");
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-            System.err.println("Ошибка соединения");
+            System.err.println("Connection Error");
         }
         return connection;
     }
+
+
 
     //TODO HIBER
     private static SessionFactory sessionFactory;
